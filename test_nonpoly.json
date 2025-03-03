@@ -1,0 +1,48 @@
+{
+    "n_enc_layers": [6],
+    "n_dec_layers": [6],
+    "emb_dim": [640],
+    "n_heads": [10],
+    "batch_size": [4],
+    "batch_size_eval": [12],
+    "exp_name": ["test_nonpoly_BS50_B12"],
+    "tasks": ["ode_lyapunov"],
+
+    "max_src_len": [0],
+    "max_len": [1024],
+    "max_output_len": [512],
+    "optimizer": ["adam_inverse_sqrt,warmup_updates=10000,lr=0.0001"],
+    "epoch_size": [300000],
+    "max_epoch": [3],
+    "num_workers": [1],
+    "export_data": ["false"],
+
+    "eval_size": [200],
+    "beam_eval": ["true"],
+    "eval_only": ["true"],
+    "eval_data": ["gen_data/bwd_nonpoly/debug/gh5cdjq9uz/data.prefixdata.prefix.100.cleaned.test.final"],
+    "eval_verbose":[1],
+    "eval_verbose_print":[true],
+    "reload_model": ["model/debug/0f6d9j4o4w/best-valid_ode_lyapunov_beam_acc.pth"],
+
+    "lyap_polynomial_H": ["true"],
+    "lyap_basic_functions_num": ["false"],
+    "lyap_pure_polynomial": ["false"],
+    "lyap_proba_proper_composition": [0.2],
+    "lyap_proba_proper_multiply": [0.2],
+    "lyap_proba_cross_composition": [0.2],
+    "lyap_proba_cross_multiply": [0],
+    "max_int": [3],
+    "beam_size": [50],
+
+    "lyap_find_domain": ["true"],
+    "lyap_SOS_checker": ["false"],
+    "lyap_SOS_fwd_gen": ["false"],
+    "lyap_proper_fwd": ["false"],
+    
+    "stopping_criterion": ["valid_ode_lyapunov_beam_acc,100"],
+    "validation_metrics": ["valid_ode_lyapunov_beam_acc"],
+ 
+    "reload_size": [-1],  
+    "reload_data": ["ode_lyapunov,gen_data/bwd_nonpoly/debug/gh5cdjq9uz/data.prefixdata.prefix.100.cleaned.train,gen_data/bwd_nonpoly/debug/gh5cdjq9uz/data.prefixdata.prefix.100.cleaned.valid.final,benchmarks/BPoly,benchmarks/FBarr,benchmarks/FLyap,benchmarks/FSOSTOOL,gen_data/bwd_nonpoly/debug/gh5cdjq9uz/data.prefixdata.prefix.100.cleaned.test.final"]
+}

@@ -2,3 +2,6 @@
 */.ipynb_checkpoints/*
 __pycache__/
 
+gen_data/*
+model/*
+*.vscode

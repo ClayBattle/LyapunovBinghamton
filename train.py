@@ -33,7 +33,7 @@ def get_parser():
     parser = argparse.ArgumentParser(description="Language transfer")
 
     # main parameters
-    parser.add_argument("--dump_path", type=str, default="/path/to/your/storage", help="Experiment dump path")  # amend to match the experiment folder name
+    parser.add_argument("--dump_path", type=str, default="model", help="Experiment dump path")  # amend to match the experiment folder name
     parser.add_argument("--exp_name", type=str, default="debug", help="Experiment name")
     parser.add_argument("--save_periodic", type=int, default=0, help="Save the model periodically (0 to disable)")
     parser.add_argument("--exp_id", type=str, default="", help="Experiment ID")
