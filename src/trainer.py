@@ -19,6 +19,7 @@ from torch.nn.utils import clip_grad_norm_
 from .optim import get_optimizer
 from .utils import to_cuda
 
+from wandb_utils import init_wandb
 
 logger = getLogger()
 
@@ -35,6 +36,8 @@ class Trainer(object):
         self.modules = modules
         self.params = params
         self.env = env
+
+        self.wandb = None
 
         # epoch / iteration size
         self.epoch_size = params.epoch_size
@@ -208,7 +211,7 @@ class Trainer(object):
         """
         if self.n_total_iter % 20 != 0:
             return
-
+        
         s_iter = "%7i - " % self.n_total_iter
         s_stat = " || ".join(
             ["{}: {:7.4f}".format(k.upper().replace("_", "-"), np.mean(v)) for k, v in self.stats.items() if type(v) is list and len(v) > 0]
@@ -230,6 +233,22 @@ class Trainer(object):
 
         # log speed + stats + learning rate
         logger.info(s_iter + s_speed + s_stat + s_lr)
+
+        #WandB logging
+        if(self.wandb is None):
+            self.wandb = init_wandb()
+
+        self.wandb.log({
+                "equations/s": self.stats["processed_e"] * 1.0 / diff, 
+                "words/s": self.stats["processed_w"] * 1.0 / diff,
+                "Learning Rate": " / ".join("{:.4e}".format(group["lr"]) for group in self.optimizer.param_groups),
+                "Training Loss": " || ".join(["{}: {:7.4f}".format(k.upper().replace("_", "-"), np.mean(v)) for k, v in self.stats.items() if type(v) is list and len(v) > 0]),
+            })
+        # Training Accuracy: This can be calculated and logged during the training process in the enc_dec_step method.
+        # Validation Accuracy: This can be obtained from the Evaluator class run_all_evals method.
+        # Validation Loss: This can be obtained from the Evaluator class run_all_evals method.
+
+            
 
     def save_checkpoint(self, name, include_optimizer=True):
         """

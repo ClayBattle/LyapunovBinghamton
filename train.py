@@ -162,10 +162,6 @@ def main(params):
         logger.info("__log__:%s" % json.dumps(scores))
         exit()
 
-    # WandB setup
-    init_wandb(LR=params.optimizer.split("=")[1], dataset=params.dump_path, epochs=params.max_epoch)
-
-
     # training
     for _ in range(params.max_epoch):
 
@@ -200,7 +196,6 @@ def main(params):
             trainer.save_best_model(scores)
             trainer.save_periodic()
             trainer.end_epoch(scores)
-    end_wandb()
 
 
 if __name__ == "__main__":
@@ -256,5 +251,12 @@ if __name__ == "__main__":
     # check parameters
     check_model_params(params)
 
+    # initialize W&B
+    init_wandb(LR=params.optimizer.split("=")[1], dataset=params.dump_path, epochs=params.max_epoch)
+
     # run experiment
     main(params)
+
+    # Clean up W&B runid
+    end_wandb()
+

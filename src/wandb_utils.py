@@ -39,3 +39,4 @@ def end_wandb():
     """Ends the W&B run and deletes the saved run ID."""
     if os.path.exists("wandb_run_id.txt"):
         os.remove("wandb_run_id.txt")
+    wandb.finish()
