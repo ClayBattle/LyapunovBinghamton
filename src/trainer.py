@@ -19,7 +19,7 @@ from torch.nn.utils import clip_grad_norm_
 from .optim import get_optimizer
 from .utils import to_cuda
 
-from wandb_utils import init_wandb
+from .wandb_utils import init_wandb
 
 logger = getLogger()
 
@@ -365,6 +365,14 @@ class Trainer(object):
                 if self.params.multi_gpu and "SLURM_JOB_ID" in os.environ:
                     os.system("scancel " + os.environ["SLURM_JOB_ID"])
                 exit()
+        
+
+        #WandB logging
+        if(self.wandb is None):
+            self.wandb = init_wandb()
+
+        self.wandb.log({"Validation Accuracy": scores.get("valid_ode_lyapunov_beam_acc", None), "Validation Loss": scores.get("valid_ode_lyapunov_beam_loss", None)})
+        
         self.save_checkpoint("checkpoint")
         self.epoch += 1
 

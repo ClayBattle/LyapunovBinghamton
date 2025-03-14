@@ -5,3 +5,5 @@ __pycache__/
 gen_data/*
 model/*
 *.vscode
+
+wandb*
