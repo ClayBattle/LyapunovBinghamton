@@ -1,7 +1,7 @@
 import wandb
 import os
 
-def init_wandb(LR=None, dataset=None, epochs=None):
+def init_wandb(optimizer=None, dataset=None, epochs=None):
     run_id = None
 
     # Check if there's a saved run ID
@@ -10,7 +10,7 @@ def init_wandb(LR=None, dataset=None, epochs=None):
             run_id = f.read().strip()
     
     # If all params are None and a run ID exists, resume the existing run
-    if LR is None and dataset is None and epochs is None and run_id:
+    if optimizer is None and dataset is None and epochs is None and run_id:
         run = wandb.init(
             entity="claybattle-suny-binghamton",
             project="Bing Power Systems Study",
@@ -23,7 +23,7 @@ def init_wandb(LR=None, dataset=None, epochs=None):
             entity="claybattle-suny-binghamton",
             project="Bing Power Systems Study",
             config={
-                "learning_rate": LR,
+                "optimizer": optimizer,
                 "architecture": "Existing",
                 "dataset": dataset,
                 "epochs": epochs,

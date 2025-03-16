@@ -216,6 +216,7 @@ class Trainer(object):
         s_stat = " || ".join(
             ["{}: {:7.4f}".format(k.upper().replace("_", "-"), np.mean(v)) for k, v in self.stats.items() if type(v) is list and len(v) > 0]
         )
+        training_loss = float(s_stat.split(":")[1].strip()) # for wandb
         for k in self.stats.keys():
             if type(self.stats[k]) is list:
                 del self.stats[k][:]
@@ -227,26 +228,29 @@ class Trainer(object):
         new_time = time.time()
         diff = new_time - self.last_time
         s_speed = "{:7.2f} equations/s - {:8.2f} words/s - ".format(self.stats["processed_e"] * 1.0 / diff, self.stats["processed_w"] * 1.0 / diff)
+
+        #WandB logging
+        if(self.wandb is None):
+            self.wandb = init_wandb()
+
+
+        self.wandb.log({
+                "equations/s": self.stats["processed_e"] * 1.0 / diff, 
+                "words/s": self.stats["processed_w"] * 1.0 / diff,
+                "Learning Rate": float(" / ".join("{:.4e}".format(group["lr"]) for group in self.optimizer.param_groups)),
+                "Training Loss": (training_loss),
+            })
+        # Training Accuracy: This can be calculated and logged during the training process in the enc_dec_step method.
+        # Validation Accuracy: This can be obtained from the Evaluator class run_all_evals method.
+        # Validation Loss: This can be obtained from the Evaluator class run_all_evals method.
+
+
         self.stats["processed_e"] = 0
         self.stats["processed_w"] = 0
         self.last_time = new_time
 
         # log speed + stats + learning rate
         logger.info(s_iter + s_speed + s_stat + s_lr)
-
-        #WandB logging
-        if(self.wandb is None):
-            self.wandb = init_wandb()
-
-        self.wandb.log({
-                "equations/s": self.stats["processed_e"] * 1.0 / diff, 
-                "words/s": self.stats["processed_w"] * 1.0 / diff,
-                "Learning Rate": " / ".join("{:.4e}".format(group["lr"]) for group in self.optimizer.param_groups),
-                "Training Loss": " || ".join(["{}: {:7.4f}".format(k.upper().replace("_", "-"), np.mean(v)) for k, v in self.stats.items() if type(v) is list and len(v) > 0]),
-            })
-        # Training Accuracy: This can be calculated and logged during the training process in the enc_dec_step method.
-        # Validation Accuracy: This can be obtained from the Evaluator class run_all_evals method.
-        # Validation Loss: This can be obtained from the Evaluator class run_all_evals method.
 
             
 

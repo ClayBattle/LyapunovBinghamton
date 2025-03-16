@@ -252,7 +252,7 @@ if __name__ == "__main__":
     check_model_params(params)
 
     # initialize W&B
-    init_wandb(LR=params.optimizer.split("=")[1], dataset=params.dump_path, epochs=params.max_epoch)
+    init_wandb(optimizer=params.optimizer, dataset=params.dump_path, epochs=params.max_epoch)
 
     # run experiment
     main(params)

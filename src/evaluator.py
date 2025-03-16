@@ -233,7 +233,7 @@ class Evaluator(object):
         if(self.wandb is None):
             self.wandb = init_wandb()
 
-        self.wandb.log({"Training Accuracy": {100. * _n_valid / _n_total}})
+        self.wandb.log({"Training Accuracy": float(100. * _n_valid / _n_total)})
 
         # compute perplexity and prediction accuracy
         assert _n_total == eval_size
