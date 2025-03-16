@@ -35,4 +35,5 @@ dependencies:
     - sympy==1.13.3
     - torch==2.2.2
     - typing-extensions==4.12.2
+    - wandb==0.19.8
 prefix: 
