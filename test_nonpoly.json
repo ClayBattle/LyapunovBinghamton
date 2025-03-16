@@ -4,9 +4,8 @@
     "emb_dim": [640],
     "n_heads": [10],
     "batch_size": [4],
-    "batch_size_eval": [12],
-    "exp_name": ["test_nonpoly_BS50_B12"],
-    "tasks": ["ode_lyapunov"],
+    "batch_size_eval": [6],
+    "exp_name": ["test_nonpoly_BS50_BE_6"],
 
     "max_src_len": [0],
     "max_len": [1024],

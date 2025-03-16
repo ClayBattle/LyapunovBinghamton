@@ -5,8 +5,6 @@
     "n_heads": [10],
     "batch_size": [4],
     "batch_size_eval": [16],
-    "beam_size": [50],
-    "exp_name": ["test_poly_50"],
 
     "max_src_len": [0],
     "max_len": [1024],
@@ -20,10 +18,10 @@
     "eval_size": [200],
     "beam_eval": ["true"],
     "eval_only": ["true"],
-    "eval_data": ["gen_data/bwd_poly/debug/2mill/data.prefixdata.prefix.100.cleaned.test.final"],
+    "eval_data": ["bwd_poly/debug/1mill/data.prefixdata.prefix.100.cleaned.test.final"],
     "eval_verbose":[1],
     "eval_verbose_print":[true],
-    "reload_model": ["model/large_poly/best-valid_ode_lyapunov_beam_acc.pth"],
+    "reload_model": ["model/debug/zwvzi7ah3a/best-valid_ode_lyapunov_beam_acc.pth"],
 
     "lyap_polynomial_H": ["true"],
     "lyap_basic_functions_num": ["true"],
@@ -35,5 +33,5 @@
     "validation_metrics": ["valid_ode_lyapunov_beam_acc"],
  
     "reload_size": [-1],  
-    "reload_data": ["ode_lyapunov,gen_data/bwd_poly/debug/2mill/data.prefixdata.prefix.100.cleaned.train,gen_data/bwd_poly/debug/2mill/data.prefixdata.prefix.100.cleaned.valid.final,gen_data/bwd_poly/debug/2mill/data.prefixdata.prefix.100.cleaned.test.final"]
+    "reload_data": ["ode_lyapunov,bwd_poly/debug/1mill/data.prefixdata.prefix.100.cleaned.train,bwd_poly/debug/1mill/data.prefixdata.prefix.100.cleaned.valid.final,benchmarks/BPoly,benchmarks/FBarr,benchmarks/FLyap,benchmarks/FSOSTOOL"]
 }
