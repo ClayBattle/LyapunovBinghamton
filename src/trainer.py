@@ -375,7 +375,7 @@ class Trainer(object):
         if(self.wandb is None):
             self.wandb = init_wandb()
 
-        self.wandb.log({"Validation Accuracy": scores.get("valid_ode_lyapunov_beam_acc", None), "Validation Loss": scores.get("valid_ode_lyapunov_beam_loss", None)})
+        self.wandb.log({"Validation Accuracy": scores.get("valid_ode_lyapunov_beam_acc", None), "Validation Loss": scores.get("valid_ode_lyapunov_xe_loss", None)})
         
         self.save_checkpoint("checkpoint")
         self.epoch += 1
