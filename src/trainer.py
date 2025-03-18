@@ -449,7 +449,18 @@ class Trainer(object):
         # forward / loss
         encoded = encoder("fwd", x=x1, lengths=len1, causal=False)
         decoded = decoder("fwd", x=x2, lengths=len2, causal=True, src_enc=encoded.transpose(0, 1), src_len=len1)
-        _, loss = decoder("predict", tensor=decoded, pred_mask=pred_mask, y=y, get_scores=False)
+        scores, loss = decoder("predict", tensor=decoded, pred_mask=pred_mask, y=y, get_scores=True)
+
+        if(self.wandb is None):
+            self.wandb = init_wandb()
+
+        with torch.no_grad():
+            predictions = scores.argmax(dim=-1)  # Get the predicted tokens
+            correct_predictions = (predictions == y).sum().item()
+            total_predictions = y.size(0)
+            training_accuracy = correct_predictions / total_predictions * 100
+            self.wandb.log({"Training Accuracy": training_accuracy})
+        
 
         self.stats[task].append(loss.item())
 

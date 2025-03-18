@@ -82,7 +82,6 @@ class Evaluator(object):
         self.modules = trainer.modules
         self.params = trainer.params
         self.env = trainer.env
-        self.wandb  = None
         Evaluator.ENV = trainer.env
 
     def run_all_evals(self):
@@ -228,12 +227,6 @@ class Evaluator(object):
         _n_valid = n_valid.sum().item()
         _n_total = n_total.sum().item()
         logger.info(f"{_n_valid}/{_n_total} ({100. * _n_valid / _n_total}%) equations were evaluated correctly.")
-
-        #WandB logging
-        if(self.wandb is None):
-            self.wandb = init_wandb()
-
-        self.wandb.log({"Training Accuracy": float(100. * _n_valid / _n_total)})
 
         # compute perplexity and prediction accuracy
         assert _n_total == eval_size
