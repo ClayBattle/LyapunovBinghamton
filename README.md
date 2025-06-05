@@ -1,5 +1,9 @@
 PyTorch original implementation of "Global Lyapunov functions: a long-standing open problem in mathematics, with symbolic transformers" (NeurIPS 2024).
 
+
+**Weights and Biases (WandB)**
+- To run using WandB (extremely useful for debugging model training/evaluation), swap to the WandBTesting branch. This branch will let you monitor validation loss, validation accuracy, training loss, training accuracy, and the learning rate of the model as it trains. If needed, this branch could be merged into this main branch. Instructions for using WandB can be found in the README on that branch. 
+
 **Requirements**
  - Requirements are contained in Lyapunov.yml, you can setup a conda env with
 ```
